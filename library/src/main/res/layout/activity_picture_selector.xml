@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:fitsSystemWindows="true"
+              android:orientation="vertical"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/top_height"
+        android:background="@color/title_bg_color"
+        android:paddingRight="15dp"
+        android:paddingLeft="15dp"
+        >
+
+        <TextView
+            android:id="@+id/btn_top_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/album"
+            android:drawableLeft="@drawable/ic_back_normal"
+            android:drawablePadding="4dp"
+            android:textSize="16dp"
+            android:textColor="@color/white"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            />
+
+        <TextView
+            android:id="@+id/tv_select_album"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="180dp"
+            android:ellipsize="end"
+            android:textColor="@color/white"
+            android:singleLine="true"
+            android:textSize="18dp"
+            android:layout_centerInParent="true"
+            android:text="@string/all_picture"
+            />
+
+        <TextView
+            android:id="@+id/btn_top_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel"
+            android:textSize="16dp"
+            android:textColor="@color/white"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            />
+
+    </RelativeLayout>
+
+    <fanjh.mine.library.ui.TransformViewPager
+        android:id="@+id/vp_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:canTouchScroll="false"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/consultation_bg"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_finish_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        >
+
+        <TextView
+            android:id="@+id/tv_preview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/preview"
+            android:textSize="16dp"
+            android:textColor="@color/tv_preview_color"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:enabled="false"
+            android:paddingTop="17dp"
+            android:paddingBottom="17dp"
+            />
+
+        <fanjh.mine.library.ui.MyButton
+            android:id="@+id/tv_finish"
+            android:layout_width="wrap_content"
+            android:layout_height="28dp"
+            app:disabledTextColor="@color/white"
+            app:normalTextColor="@color/white"
+            app:layersColor="@color/button_layer"
+            app:normalBackgroundColor="@color/slideing_select"
+            app:disabledBackgroundColor="@color/color_FFDDDDDD"
+            app:isEnabled="false"
+            app:radius="14dp"
+            app:textSize="14dp"
+            app:text="@string/preview_finish"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            />
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 蒙层按钮属性 -->
+    <declare-styleable name="MyButton">
+        <attr name="disabledTextColor" format="color" />
+        <attr name="disabledBackgroundColor" format="color" />
+        <attr name="radius" format="dimension" />
+        <attr name="text" format="string" />
+        <attr name="layersColor" format="color" />
+        <attr name="disableLayersColor" format="color" />
+        <attr name="textSize" format="dimension" />
+        <attr name="normalTextColor" format="color" />
+        <attr name="normalBackgroundColor" format="color" />
+        <attr name="isEnabled" format="boolean" />
+        <attr name="vertical_padding" format="dimension" />
+        <attr name="mybutton_border_color" format="color" />
+        <attr name="mybutton_border_width" format="dimension" />
+        <attr name="mybutton_second_text" format="string" />
+        <attr name="mybutton_second_text_color" format="color" />
+        <attr name="mybutton_second_text_size" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="TransformViewPager">
+        <attr name="canTouchScroll" format="boolean" />
+    </declare-styleable>
+
+</resources>

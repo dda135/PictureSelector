@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/white"
+              android:gravity="center_vertical"
+              android:orientation="horizontal"
+              android:paddingBottom="10dp"
+              android:paddingLeft="15dp"
+              android:paddingRight="15dp"
+              android:paddingTop="10dp"
+    >
+
+    <ImageView
+        android:id="@+id/iv_album"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentLeft="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_picture_failed"
+        />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingLeft="14dp"
+        >
+
+        <TextView
+            android:id="@+id/tv_album_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/iv_album"
+            android:layout_marginLeft="@dimen/dimen_12dp"
+            android:layout_toRightOf="@+id/iv_album"
+            android:textColor="@color/item_left_black"
+            android:textSize="18dp"
+            tools:text="WeixinWork"
+            />
+
+        <TextView
+            android:id="@+id/tv_album_picture_count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/iv_album"
+            android:layout_marginLeft="@dimen/dimen_12dp"
+            android:layout_toRightOf="@+id/iv_album"
+            android:textSize="14dp"
+            android:textColor="@color/gray"
+            android:layout_marginTop="2dp"
+            tools:text="5"
+            />
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="8dp"
+        android:layout_height="14dp"
+        android:src="@drawable/ic_arraw_to"
+        />
+
+
+</LinearLayout>

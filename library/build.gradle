@@ -14,12 +14,6 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
 }
 
 dependencies {
@@ -28,14 +22,17 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:+'
+    compile 'com.android.support:recyclerview-v7:26.0.0-alpha1'
     testCompile 'junit:junit:4.12'
+    compile 'com.squareup.okio:okio:1.13.0'
 }
 
 publish {
-    userOrg = 'fanjinhao'//bintray.com用户名
+    userOrg = '1736880019'//bintray.com用户名
     groupId = 'com.fanjinho'//jcenter上的路径
     artifactId = 'picture-selector'//项目名称
     publishVersion = '1.0.0'//版本号
     desc = 'Oh hi, this is a nice description for a project, right?'//描述，不重要
-    website = 'https://github.com/hyman/basetools'//网站，不重要；尽量模拟github上的地址，例如我这样的；当然你有地址最好了
+    website = 'https://github.com/dda135/PictureSelector'//网站，不重要；尽量模拟github上的地址，例如我这样的；当然你有地址最好了
+    repoName = 'android'//bintray中创建的repo名称
 }

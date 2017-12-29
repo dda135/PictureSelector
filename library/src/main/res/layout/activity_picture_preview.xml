@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:id="@+id/fl_parent_layout"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+    >
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <fanjh.mine.library.ui.PreviewTitleView
+        android:id="@+id/ptv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        />
+
+    <ImageView
+        android:id="@+id/iv_download"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="20dp"
+        android:src="@drawable/ic_preview_download"
+        android:visibility="gone"
+        />
+
+    <FrameLayout
+        android:id="@+id/fl_select_bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="#99000000"
+        android:paddingBottom="11dp"
+        android:paddingRight="15dp"
+        android:paddingTop="11dp"
+        android:visibility="gone"
+        >
+
+        <fanjh.mine.library.ui.MyButton
+            android:id="@+id/tv_finish"
+            android:layout_width="wrap_content"
+            android:layout_height="28dp"
+            android:layout_gravity="center_vertical|right"
+            app:disabledBackgroundColor="@color/color_FFDDDDDD"
+            app:disabledTextColor="@color/white"
+            app:layersColor="@color/button_layer"
+            app:normalBackgroundColor="@color/slideing_select"
+            app:normalTextColor="@color/white"
+            app:radius="14dp"
+            app:text="@string/complete"
+            app:textSize="14dp"
+            />
+
+    </FrameLayout>
+
+</FrameLayout>

@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">Library</string>
+    <string name="preview">预览</string>
+    <string name="unknown">未知</string>
+    <string name="album">相册</string>
+    <string name="max_select_picture_hint">最多选择%1$d张图片！</string>
+    <string name="image_download_fail">图片下载失败，请稍后再试！</string>
+    <string name="image_download_success">已保存到手机相册！</string>
+    <string name="preview_finish">完成%1$s</string>
+    <string name="all_picture">所有照片</string>
+    <string name="picture_preview_count">%1$d/%2$d</string>
+    <string name="history_upload">历史上传</string>
+    <string name="history_upload_hint">仅显示最近3个月的历史上传图片</string>
+    <string name="save_to_album">保存到相册</string>
+    <string name="gif_max_size_hint">当前gif大小超过可选择范围！</string>
+    <string name="select_picture_error_hint">当前不可选择，请退出重新进入！</string>
+    <string name="all">全部</string>
+    <string name="complete">完成</string>
+    <string name="no_connection_error">连接异常，请检查网络</string>
+    <string name="cancel">取消</string>
 </resources>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/iv_picture"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_picture_failed"
+        />
+
+    <FrameLayout
+        android:id="@+id/fl_select_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen_4dp"
+        android:layout_gravity="right|top"
+        >
+
+        <ImageView
+            android:id="@+id/iv_select"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@drawable/btn_picture_selector"
+            android:layout_gravity="center"
+            />
+
+    </FrameLayout>
+
+</FrameLayout>
