@@ -30,6 +30,11 @@ android {
             signingConfig signingConfigs.config
         }
     }
+
+    lintOptions {
+        abortOnError false
+    }
+
 }
 
 dependencies {
@@ -40,5 +45,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
-    compile project(':library')
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }
