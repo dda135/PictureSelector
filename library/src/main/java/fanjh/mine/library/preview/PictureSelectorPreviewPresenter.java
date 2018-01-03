@@ -2,6 +2,7 @@ package fanjh.mine.library.preview;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -38,6 +39,7 @@ public class PictureSelectorPreviewPresenter extends BasePreviewPresenter implem
     private ArrayList<Picture> allPictures;
     private int maxSelectCount;
     private BaseSelectorSpec<Picture> selectorSpec;
+    private boolean isRestore;
 
     public PictureSelectorPreviewPresenter(FragmentActivity activity) {
         this.activity = activity;
@@ -45,10 +47,17 @@ public class PictureSelectorPreviewPresenter extends BasePreviewPresenter implem
     }
 
     @Override
-    public void receiverIntent(Intent intent) {
-        initPosition = intent.getIntExtra(EXTRA_INIT_POSITION, -1);
+    public void receiverIntent(Intent intent, Bundle bundle) {
+        if(null == bundle){
+            isRestore = false;
+            initPosition = intent.getIntExtra(EXTRA_INIT_POSITION, -1);
+            selectorSpec = (BaseSelectorSpec<Picture>) intent.getSerializableExtra(EXTRA_SELECT_SPEC);
+        }else {
+            isRestore = true;
+            initPosition = bundle.getInt(EXTRA_INIT_POSITION, -1);
+            selectorSpec = (BaseSelectorSpec<Picture>) bundle.getSerializable(EXTRA_SELECT_SPEC);
+        }
         albumID = intent.getStringExtra(EXTRA_ALBUM_ID);
-        selectorSpec = (BaseSelectorSpec<Picture>) intent.getSerializableExtra(EXTRA_SELECT_SPEC);
         allPictures = (ArrayList<Picture>) intent.getSerializableExtra(EXTRA_ALL_PICTURES);
         maxSelectCount = intent.getIntExtra(EXTRA_MAX_SELECT_COUNT,1);
     }
@@ -59,7 +68,7 @@ public class PictureSelectorPreviewPresenter extends BasePreviewPresenter implem
             return;
         }
         if(null != allPictures){
-            getView().showSelectPager(createPagerAdapter(), initPosition);
+            getView().showSelectPager(createPagerAdapter(), initPosition < allPictures.size()?initPosition:-1);
         }else {
             localPictureLoader.start(albumID, 0,0);
         }
@@ -120,10 +129,19 @@ public class PictureSelectorPreviewPresenter extends BasePreviewPresenter implem
     }
 
     @Override
+    public void saveInstance(Bundle bundle, int nowIndex) {
+        bundle.putInt(EXTRA_INIT_POSITION,nowIndex < 0?initPosition:nowIndex);
+        bundle.putSerializable(EXTRA_SELECT_SPEC,selectorSpec);
+    }
+
+    @Override
     public void onPictureReady(ArrayList<Picture> pictures) {
         if (null != getView()) {
             allPictures = pictures;
-            getView().showSelectPager(createPagerAdapter(), initPosition);
+            if(isRestore) {
+                selectorSpec.verifyReasonable(pictures);
+            }
+            getView().showSelectPager(createPagerAdapter(), initPosition < allPictures.size()?initPosition:-1);
         }
     }
 

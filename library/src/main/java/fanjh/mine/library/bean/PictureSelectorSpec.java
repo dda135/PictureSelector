@@ -81,4 +81,27 @@ public class PictureSelectorSpec extends BaseSelectorSpec<Picture> implements Se
         return result;
     }
 
+    @Override
+    public void verifyReasonable(ArrayList<Picture> list) {
+        if(null == list){
+            return;
+        }
+        Iterator<Long> iterator = selectedIndex.iterator();
+        boolean shouldRemove;
+        while (iterator.hasNext()){
+            shouldRemove = true;
+            long id = iterator.next();
+            for(Picture picture:list){
+                if(picture._id == id){
+                    shouldRemove = false;
+                    break;
+                }
+            }
+            if(shouldRemove) {
+                iterator.remove();
+                selectedPictures.remove(id);
+            }
+        }
+    }
+
 }

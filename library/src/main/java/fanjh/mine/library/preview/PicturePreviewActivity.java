@@ -72,7 +72,7 @@ public class PicturePreviewActivity extends BaseActivity implements IPreviewView
 
         presenter = initPresenter(getIntent());
         presenter.attachView(this);
-        presenter.receiverIntent(getIntent());
+        presenter.receiverIntent(getIntent(),savedInstanceState);
         presenter.loadData();
     }
 
@@ -266,6 +266,14 @@ public class PicturePreviewActivity extends BaseActivity implements IPreviewView
     protected void onDestroy() {
         super.onDestroy();
         presenter.destroy();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if(null != presenter){
+            presenter.saveInstance(outState,vpContent.getCurrentItem());
+        }
     }
 
     public static void start(Activity context, ArrayList<String> uris, int initIndex) {

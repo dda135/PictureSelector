@@ -1,8 +1,15 @@
 package fanjh.mine.library;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.PermissionInfo;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.PermissionChecker;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +30,7 @@ import fanjh.mine.library.adapter.AlbumAdapter;
 import fanjh.mine.library.adapter.BasePictureAdapter;
 import fanjh.mine.library.adapter.PictureSelectorAdapter;
 import fanjh.mine.library.bean.Album;
+import fanjh.mine.library.bean.BaseSelectorSpec;
 import fanjh.mine.library.bean.Picture;
 import fanjh.mine.library.bean.PictureSelectorSpec;
 import fanjh.mine.library.loader.LocalAlbumLoader;
@@ -29,7 +38,6 @@ import fanjh.mine.library.loader.LocalPictureLoader;
 import fanjh.mine.library.loader.PictureMediaCursorParser;
 import fanjh.mine.library.preview.PicturePreviewActivity;
 import fanjh.mine.library.ui.MyButton;
-
 
 /**
  * @author fanjh
@@ -45,6 +53,7 @@ public class PictureSelectorActivity extends BaseActivity implements LocalAlbumL
     private static final String SAVE_ALBUM_ID = "album_id";
     public static final String EXTRA_SELECT_COUNT = "count";
     public static final String EXTRA_SELECT_PICTURES = "extra_pictures";
+    private static final String SAVE_SELECT_SPEC = "select_spec";
     public static final int SPAN_COUNT = 3;
     public static final int PAGE_ALBUM = 0;
     public static final int PAGE_PICTURE = 1;
@@ -67,11 +76,25 @@ public class PictureSelectorActivity extends BaseActivity implements LocalAlbumL
 
     private int maxSelectCount;
     private String currentAlbumID;
+    private boolean hasPermission;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_picture_selector);
+
+        int result = PermissionChecker.checkSelfPermission(mContext,Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        switch (result){
+            case PermissionChecker.PERMISSION_DENIED:
+                Toast.makeText(getApplicationContext(),"请校验权限之后再启动！",Toast.LENGTH_LONG).show();
+                break;
+            case PermissionChecker.PERMISSION_GRANTED:
+                hasPermission = true;
+                break;
+            default:
+                Toast.makeText(getApplicationContext(),"请打开存储权限！",Toast.LENGTH_LONG).show();
+                break;
+        }
 
         btnTopBack = findViewById(R.id.btn_top_back);
         btnTopBack.setOnClickListener(new View.OnClickListener() {
@@ -113,15 +136,17 @@ public class PictureSelectorActivity extends BaseActivity implements LocalAlbumL
         localAlbumLoader = new LocalAlbumLoader(this, this);
         localPictureLoader = new LocalPictureLoader<Picture>(this, this, new PictureMediaCursorParser());
 
+        BaseSelectorSpec<Picture> selectorSpec = null;
         if (null != savedInstanceState) {
             currentAlbumID = savedInstanceState.getString(SAVE_ALBUM_ID);
+            selectorSpec = (BaseSelectorSpec<Picture>) savedInstanceState.getSerializable(SAVE_SELECT_SPEC);
         }
         maxSelectCount = getIntent().getIntExtra(EXTRA_SELECT_COUNT, 1);
 
-        initPictureView();
+        initPictureView(selectorSpec);
         initAlbumView();
 
-        tvFinish.setText(getString(R.string.preview_finish, ""), -1, 0);
+        changeSelectState(null == selectorSpec?0:selectorSpec.getSelectedCount());
 
         vpContent.setAdapter(new PagerAdapter() {
             @Override
@@ -187,16 +212,21 @@ public class PictureSelectorActivity extends BaseActivity implements LocalAlbumL
 
             }
         });
-
-        localPictureLoader.start(currentAlbumID, 0, PAGE_COUNT);
-        localAlbumLoader.start(getLoaderManager());
+        if(hasPermission) {
+            localPictureLoader.start(currentAlbumID, 0, PAGE_COUNT);
+            localAlbumLoader.start(getLoaderManager());
+        }
     }
 
-    private void initPictureView() {
+    private void initPictureView(BaseSelectorSpec<Picture> selectorSpec) {
         int padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,1,getResources().getDisplayMetrics());
         int total = getResources().getDisplayMetrics().widthPixels;
         int imageSize = (total - (SPAN_COUNT + 1) * padding) / SPAN_COUNT;
         basePictureAdapter = new PictureSelectorAdapter(mContext, imageSize, maxSelectCount);
+        if(null != selectorSpec){
+            basePictureAdapter.setSelectorSpec(selectorSpec);
+            changeSelectState(basePictureAdapter.getSelectedCount());
+        }
         basePictureAdapter.setOnPictureClickListener(this);
         basePictureAdapter.setOnPictureSelectCallback(this);
         rvPicture = new RecyclerView(mContext);
@@ -204,6 +234,7 @@ public class PictureSelectorActivity extends BaseActivity implements LocalAlbumL
         rvPicture.setBackgroundColor(getResources().getColor(R.color.consultation_bg));
         rvPicture.setLayoutManager(new GridLayoutManager(mContext, SPAN_COUNT));
         rvPicture.addItemDecoration(new PictureItemDecoration(padding, SPAN_COUNT));
+        rvPicture.setHasFixedSize(true);
         rvPicture.setAdapter(basePictureAdapter);
     }
 
@@ -280,6 +311,9 @@ public class PictureSelectorActivity extends BaseActivity implements LocalAlbumL
         super.onSaveInstanceState(outState);
         if (null != localPictureLoader && null != localPictureLoader.getCurrentAlbumID()) {
             outState.putSerializable(SAVE_ALBUM_ID, localPictureLoader.getCurrentAlbumID());
+        }
+        if(null != basePictureAdapter.getSelectorSpec()){
+            outState.putSerializable(SAVE_SELECT_SPEC,basePictureAdapter.getSelectorSpec());
         }
     }
 

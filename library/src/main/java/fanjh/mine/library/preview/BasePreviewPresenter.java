@@ -1,6 +1,8 @@
 package fanjh.mine.library.preview;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 
 import fanjh.mine.library.BasePresenter;
 
@@ -14,8 +16,9 @@ public abstract class BasePreviewPresenter extends BasePresenter<IPreviewView> {
     /**
      * 处理之前页面传递过来的数据
      * @param intent 用于获取数据
+     * @param bundle 之前保存的数据集
      */
-    public abstract void receiverIntent(Intent intent);
+    public abstract void receiverIntent(Intent intent,@Nullable Bundle bundle);
 
     /**
      * 加载当前预览页要显示的数据
@@ -58,4 +61,12 @@ public abstract class BasePreviewPresenter extends BasePresenter<IPreviewView> {
      * 页面销毁
      */
     public abstract void destroy();
+
+    /**
+     * 用于保存数据
+     * @param bundle 数据集
+     * @param nowIndex 当前下标
+     */
+    public abstract void saveInstance(Bundle bundle, int nowIndex);
+
 }

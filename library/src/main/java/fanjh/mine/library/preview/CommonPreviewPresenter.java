@@ -2,6 +2,7 @@ package fanjh.mine.library.preview;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 
 import java.util.List;
 
@@ -23,9 +24,13 @@ public class CommonPreviewPresenter extends BasePreviewPresenter{
     }
 
     @Override
-    public void receiverIntent(Intent intent) {
+    public void receiverIntent(Intent intent, Bundle bundle) {
         pictures = (List<String>) intent.getSerializableExtra(EXTRA_PICTURES);
-        index = intent.getIntExtra(EXTRA_INIT_INDEX,-1);
+        if(null == bundle) {
+            index = intent.getIntExtra(EXTRA_INIT_INDEX, -1);
+        } else {
+            index = bundle.getInt(EXTRA_INIT_INDEX,-1);
+        }
     }
 
     @Override
@@ -63,6 +68,11 @@ public class CommonPreviewPresenter extends BasePreviewPresenter{
     @Override
     public void destroy() {
 
+    }
+
+    @Override
+    public void saveInstance(Bundle bundle,int nowIndex) {
+        bundle.putInt(EXTRA_INIT_INDEX,nowIndex < 0?index:nowIndex);
     }
 
 }

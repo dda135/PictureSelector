@@ -66,6 +66,12 @@ public abstract class BaseSelectorSpec<T> implements Serializable {
      */
     public abstract ArrayList<T> getSelectedPicture();
 
+    /**
+     * 用于检验合理性，从而剔除一些不合理的旧的选择
+     * @param list 当前可以选择的列表
+     */
+    public abstract void verifyReasonable(ArrayList<T> list);
+
     public int getMaxSelectedCount() {
         return maxSelectedCount;
     }
